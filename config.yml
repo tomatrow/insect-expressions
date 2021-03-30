@@ -1,0 +1,4 @@
+development:
+  password: ${THEMEKIT_DEV_PASSWORD}
+  store: ${THEMEKIT_DEV_STORE}
+  theme_id: ${THEMEKIT_DEV_THEME_ID}
