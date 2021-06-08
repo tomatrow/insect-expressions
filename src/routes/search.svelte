@@ -2,7 +2,7 @@
     import type { LoadOptions, Loaded } from "../types/index.type"
     export async function load(options: LoadOptions): Promise<Loaded> {
         return {
-            props: {   
+            props: {
                 path: options.page.path
             }
         }

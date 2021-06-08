@@ -1,14 +1,16 @@
 {
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"target": "es2018",
-		"noImplicitAny": true,
+		"module": "es2020",
+		"lib": ["es2020"],
+		"target": "es2019",
 		/**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
 			to enforce using `import type` instead of `import` for Types.
 			*/
 		"importsNotUsedAsValues": "error",
 		"isolatedModules": true,
+		"resolveJsonModule": true,
 		/**
 			To have warnings/errors of the Svelte compiler at the correct position,
 			enable source maps by default.
@@ -23,10 +25,11 @@
 		"paths": {
 			"$app/*": [".svelte/dev/runtime/app/*", ".svelte/build/runtime/app/*"],
             "$service-worker": [".svelte/build/runtime/service-worker"],
-            "$common/*": ["src/common/*"],
 			"$lib/*": ["src/lib/*"],
+            "$common/*": ["src/common/*"],
             "$types/*": ["src/types/*"] 
-		}
+		},
+        "noImplicitAny": true
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }

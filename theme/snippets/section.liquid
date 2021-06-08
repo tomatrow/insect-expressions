@@ -1,0 +1,16 @@
+<script type="application/json">
+    { 
+        "id": {{ section.id | json }},
+        "blocks": [
+            {%- for item in section.blocks -%}
+                {
+                    "id": {{ item.id | json }},
+                    "shopify_attributes": {{ item.shopify_attributes | json }},
+                    "type": {{ item.type | json }},
+                    {% render "settings" settings: item.settings %}
+                }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+        ],
+        {% render "settings" settings: section.settings %}
+    }
+</script>

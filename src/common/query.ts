@@ -6,7 +6,7 @@ export function mutation(query: string, variables = {}) {
     return primitiveQuery(query, variables)
 }
 
-export async function primitiveQuery(query: string, variables: Record<string,any>) {
+export async function primitiveQuery(query: string, variables: Record<string, any>) {
     const headers: HeadersInit = {
         "X-Shopify-Storefront-Access-Token": import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN
     }
@@ -22,16 +22,22 @@ export async function primitiveQuery(query: string, variables: Record<string,any
         })
         body = JSON.stringify({ query, variables })
     }
-    
-	const fetch = typeof window !== 'undefined'
-	? window.fetch
-	: await import('node-fetch').then(mod => mod.default) as WindowOrWorkerGlobalScope["fetch"]
 
-    return await fetch(`https://${import.meta.env.VITE_SHOPIFY_SHOP_URL}/api/2021-01/graphql.json`, {
-        method: "post",
-        headers,
-        body
-    })
+    const fetch =
+        typeof window !== "undefined"
+            ? window.fetch
+            : ((await import("node-fetch").then(
+                  mod => mod.default
+              )) as WindowOrWorkerGlobalScope["fetch"])
+
+    return await fetch(
+        `https://${import.meta.env.VITE_SHOPIFY_SHOP_URL}/api/2021-01/graphql.json`,
+        {
+            method: "post",
+            headers,
+            body
+        }
+    )
         .then(response => response.json())
         .then(json => {
             if (json.errors) throw new Error(json.errors[0].message)

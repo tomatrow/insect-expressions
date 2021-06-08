@@ -1,0 +1,62 @@
+{%- layout none -%}
+
+{% comment %} 
+    Now this page acts more like a real API. Once you create a page with this layout (e.g., example.com/pages/menus):
+    - Hitting it directly will give you an array of available handles: example.com/pages/menus
+    - Supplying a handle name will return that linklist: example.com/pages/menus/handle
+    - Supplying multiple handles separated by '+' will give you an array of linklists requested: example.com/pages/menus/handle1+handle2
+    instructions/source: https://community.shopify.com/c/Shopify-APIs-SDKs/Where-is-the-LinkList-API-endpoint/m-p/502391/highlight/true#M32567
+    gist: https://gist.github.com/stvnrynlds/21461c1d6a4b8124d53428cf2b5e5157 
+{% endcomment %}
+
+{%- assign listParams = request.path | replace: page.url, "" | remove: "/" | split: '+' -%}
+
+{% if listParams != empty %}
+{
+  {% for param in listParams -%}
+  {%- assign getList = linklists[param] -%}
+  {%- if getList != empty %}
+      "{{ param }}": [{% for level1 in getList.links %}{
+		  "id": "{{ level1.title | handle }}-{{ forloop.index0 }}",
+          "title": "{{ level1.title }}",
+          "url": "{% if level1.type != "http_link" %}{{ shop.url }}{% endif %}{{ level1.url }}",
+          "children": [
+            {%- for level2 in level1.links -%}
+            {
+              "id": "{{ level2.title | handle }}-{{ forloop.index0 }}",
+              "title": "{{ level2.title }}",
+              "url": "{% if level2.type != "http_link" %}{{ shop.url }}{% endif %}{{ level2.url }}",
+              "children": [
+                {%- for level3 in level2.links -%}
+                {
+                  "id": "{{ level2.title | handle }}-{{ forloop.index }}",
+                  "title": "{{ level3.title }}",
+                  "url": "{% if level3.type != "http_link" %}{{ shop.url }}{% endif %}{{ level3.url }}"
+                }
+                {%- if forloop.last == false %},{% endif -%}
+                {%- endfor -%}
+              ]
+            }
+            {%- if forloop.last == false %},{% endif -%}
+            {%- endfor -%}
+          ]
+        }
+        {%- if forloop.last == false %},{% endif -%}
+        {% endfor %}
+      ]{%- if forloop.last == false %},{% endif -%}
+{% else %}
+    "{{ param }}": [
+        {
+            "status": 404,
+            "code": "not-found",
+            "title": "Menu Not Found",
+            "detail": "Menu `{{ param }}` was not found"
+        }
+    ]{%- if forloop.last == false %},{% endif -%}
+{%- endif -%}
+{%- endfor %}
+}
+{% else %}
+  {% assign menuHandles = linklists | map: 'handle' %}
+  ["{{ menuHandles | join: '","'}}"]
+{% endif %}

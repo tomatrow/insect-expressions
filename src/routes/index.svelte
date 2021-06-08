@@ -1,20 +1,18 @@
 <script lang="ts" context="module">
-    import type { LoadOptions, Loaded } from "../types/index.type"
-    export async function load(options: LoadOptions): Promise<Loaded> {
+    import type { LoadInput, LoadOutput } from "@sveltejs/kit/types.internal"
+    export async function load({ page }: LoadInput): Promise<LoadOutput> {
         return {
-            props: {   
-                path: options.page.path
+            props: {
+                path: page.path
             }
         }
     }
 </script>
 
-
 <script lang="ts">
     export let path: string
     console.log(path)
 </script>
-
 
 <div>Hello from {path}</div>
 <div class="flex flex-col">

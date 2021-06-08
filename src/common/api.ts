@@ -3,7 +3,7 @@ import type { Collection } from "shopify-storefront-api-typings"
 import { graphql, query } from "./query"
 
 const blogQuery = graphql`
-    query($handle: String!) {
+    query ($handle: String!) {
         blogByHandle(handle: $handle) {
             title
             handle
@@ -49,7 +49,6 @@ const blogListQuery = graphql`
         }
     }
 `
-
 
 export const productFragment = graphql`
     fragment ProductFragment on Product {
@@ -101,14 +100,13 @@ export const productFragment = graphql`
 `
 
 const productQuery = graphql`
-    query($handle: String!) {
+    query ($handle: String!) {
         productByHandle(handle: $handle) {
             ...ProductFragment
         }
     }
     ${productFragment}
 `
-
 
 const collectionListQuery = graphql`
     {
@@ -130,9 +128,8 @@ const collectionListQuery = graphql`
     }
 `
 
-
 const pageQuery = graphql`
-    query($handle: String!) {
+    query ($handle: String!) {
         pageByHandle(handle: $handle) {
             id
             title
@@ -141,10 +138,8 @@ const pageQuery = graphql`
     }
 `
 
-
-
 const articleQuery = graphql`
-    query($blogHandle: String!, $articleHandle: String!) {
+    query ($blogHandle: String!, $articleHandle: String!) {
         blogByHandle(handle: $blogHandle) {
             id
             articleByHandle(handle: $articleHandle) {
@@ -166,9 +161,8 @@ const articleQuery = graphql`
     }
 `
 
-
 const collectionQuery = graphql`
-    query($handle: String!, $size: Int!, $cursor: String) {
+    query ($handle: String!, $size: Int!, $cursor: String) {
         collectionByHandle(handle: $handle) {
             id
             title
@@ -195,16 +189,14 @@ const collectionQuery = graphql`
     ${productFragment}
 `
 
-
 const recommendationsQuery = graphql`
-    query($id: ID!) {
+    query ($id: ID!) {
         productRecommendations(productId: $id) {
             ...ProductFragment
         }
     }
     ${productFragment}
 `
-
 
 export async function blog(handle: string) {
     const { data } = await query(blogQuery, { handle })
@@ -237,7 +229,6 @@ export async function collection(handle: string, cursor?: string, size = 10) {
     const { data } = await query(collectionQuery, { handle, cursor, size })
     return data.collectionByHandle as Collection
 }
-
 
 export async function recommendations(id: string) {
     const { data } = await query(recommendationsQuery, { id })

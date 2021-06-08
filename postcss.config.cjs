@@ -2,6 +2,9 @@ const tailwindcss = require("tailwindcss");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 
+// import tailwindcss from "tailwindcss"
+// import autoprefixer from "autoprefixer"
+// import cssnano from "cssnano"
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 

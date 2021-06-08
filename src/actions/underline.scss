@@ -1,0 +1,19 @@
+.underline-decoration {
+    &::after {
+        content: " ";
+        display: block;
+        transform: scaleX(0);
+        transform-origin: var(--line-origin);
+        transition: transform;
+        transition-duration: 1.2s;
+        height: 0.125rem;
+        width: 100%;
+        max-width: var(--max-width);
+        background-color: var(--line-color);
+    }
+
+    &.active-underline::after,
+    &:hover::after {
+        transform: scaleX(var(--line-scale));
+    }
+}

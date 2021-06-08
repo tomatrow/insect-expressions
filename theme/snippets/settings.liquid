@@ -1,0 +1,18 @@
+{%- comment -%} This is just to find any token in settings that could be a link list {%- endcomment -%}
+{%- capture 'json' -%}{{ settings | json }}{%- endcapture -%}
+{%- liquid 
+    assign delimiter = "@@"
+    assign tokens = json | remove_first: "{"
+    assign tokens = tokens | split: "" | reverse | join: ""
+    assign tokens = tokens | remove_first: "}"
+    assign tokens = tokens | split: "" | reverse | join: ""
+    assign tokens = tokens | replace: '":"', delimiter
+    assign tokens = tokens | replace: '":', delimiter
+    assign tokens = tokens | replace: '","', delimiter
+    assign tokens = tokens | replace: ',"', delimiter
+    assign tokens = tokens | replace: '"', ''
+    assign tokens = tokens | split: delimiter
+-%}
+
+"settings": {{ settings | json }},
+"linklists": {% render "link-list" listParams: tokens %}
