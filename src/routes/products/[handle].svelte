@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-    import type { LoadInput, LoadOutput } from "@sveltejs/kit/types.internal"
-    export async function load({ page }: LoadInput): Promise<LoadOutput> {
+    import type { Load } from "@sveltejs/kit"
+    export const load: Load = async ({ page }) => {
         return {
             props: {
                 path: page.path

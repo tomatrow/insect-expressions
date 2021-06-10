@@ -1,14 +1,13 @@
 <script lang="ts">
     import type { Collection } from "shopify-storefront-api-typings"
     import { graphql, query } from "../../common/query"
-    import { preloadImage } from "../../common/utility"
-    import { fade, slide } from "svelte/transition"
+    import { preloadImage, delay } from "../../common/utility"
+    import { fade, slide, fly } from "svelte/transition"
     import { quartInOut } from "svelte/easing"
     import { SearchMajor, CartMajor, CustomersMajor, CaretDownMinor } from "../polaris"
     import type { Section } from "../../common/sections"
     import { loadSection, filterBlocks } from "../../common/sections"
-    import Link from "$lib/components/Link.svelte"
-    import SocialLink from "$lib/components/SocialLink.svelte"
+    import { Link, Carousel, SocialLink } from "$lib/components"
     import { onMount } from "svelte"
 
     export const height = "10rem"
@@ -17,12 +16,10 @@
     let header: Section
     let collections: Collection[] = []
 
-    let Carousel: typeof import("svelte-carousel/src/components/Carousel/Carousel.svelte").default
     onMount(async () => {
         loadSection({ id: "header" }).then(section => (header = section))
         loadSection({ id: "global" }).then(section => (global = section))
         collectionQuery().then(items => (collections = items))
-        Carousel = (await import("svelte-carousel/src/components/Carousel/Carousel.svelte")).default
     })
 
     let hoverIndex: number
@@ -78,7 +75,7 @@
                     <CustomersMajor class="w-4 h-4" />
                 </div>
             </div>
-            <ul class="space-x-4 flex justify-center py-5">
+            <ul class="space-x-4 z-40 flex justify-center py-5">
                 {#if header.settings.primaryNavigation}
                     {#each header.linklists[header.settings.primaryNavigation] as { title, url, children }, index}
                         <li
@@ -105,17 +102,20 @@
             <div class="relative w-full">
                 {#if activeList?.children.length}
                     <ul
-                        in:fade={{ duration: 400 }}
-                        out:slide={{ duration: 200 }}
-                        class="bg-light space-x-4 z-50 flex justify-around"
+                        transition:slide={{
+                            duration: 400,
+                            easing: quartInOut
+                        }}
+                        class="space-x-4 z-50 flex overflow-hidden justify-around"
                         style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2)"
                     >
                         {#each activeList.children as { title, url, children }, index}
                             <li class="flex flex-col" style="flex-grow: 1; flex-basis: 0">
                                 {#if getCollection(url, collections)}
                                     <img
-                                        in:slide={{
-                                            duration: index * 100 + 100,
+                                        transition:fly={{
+                                            y: -400,
+                                            duration: index * 100 + 400,
                                             easing: quartInOut
                                         }}
                                         class="h-32 object-cover object-center"
@@ -131,17 +131,19 @@
                         {/each}
                     </ul>
                 {/if}
-                {#if Carousel}
-                    <div class="absolute top-0" style="z-index: -1">
-                        <Carousel arrows={false} autoplay dots={false} duration={1500}>
-                            {#each filterBlocks("banner", header) as { title }}
-                                <span class="py-2 w-full bg-black text-white text-center"
-                                    >{@html title}</span
-                                >
-                            {/each}
-                        </Carousel>
+                <Carousel items={filterBlocks("banner", header)} let:payload let:controls loop>
+                    <div class="absolute top-0 w-full h-10 bg-black" style="z-index: -1">
+                        {#key payload}
+                            <span
+                                in:fly={{ x: 100, duration: 1500 }}
+                                out:fly={{ x: -100, duration: 1500 }}
+                                class="absolute inset-0 flex items-center justify-center py-2 w-full text-white"
+                                on:introend={() => delay(4000).then(controls.next)}
+                                >{@html payload.title}</span
+                            >
+                        {/key}
                     </div>
-                {/if}
+                </Carousel>
             </div>
         </div>
     </header>
