@@ -17,7 +17,7 @@
 </script>
 
 <Header bind:height />
-<main class="mx-auto min-h-screen w-11/12" style="margin-top: {height}">
+<main class="mx-auto w-11/12" style="margin-top: {height}; min-height: calc(100vh-{height})">
     <slot />
 </main>
 <Footer />

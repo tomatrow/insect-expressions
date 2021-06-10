@@ -10,7 +10,7 @@
     import { Link, Carousel, SocialLink } from "$lib/components"
     import { onMount } from "svelte"
 
-    export const height = "10rem"
+    export const height = "9.5rem"
 
     let global: Section
     let header: Section
