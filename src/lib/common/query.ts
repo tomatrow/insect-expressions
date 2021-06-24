@@ -40,7 +40,7 @@ export async function primitiveQuery(query: string, variables: Record<string, an
     )
         .then(response => response.json())
         .then(json => {
-            if (json.errors) throw new Error(json.errors[0].message)
+            if (json.errors) throw new Error(json.errors[0]?.message)
             return json
         })
 }

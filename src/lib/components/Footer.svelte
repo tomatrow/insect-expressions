@@ -1,17 +1,19 @@
 <script lang="ts">
-    import type { Section } from "../../common/sections"
-    import { loadSection, filterBlocks } from "../../common/sections"
-    import Button from "../components/Button.svelte"
+    import type { Section } from "$lib/common/sections"
+    import { loadSection, filterBlocks } from "$lib/common/sections"
+    import Button from "$lib/components/Button.svelte"
     import Link from "$lib/components/Link.svelte"
     import SocialLink from "$lib/components/SocialLink.svelte"
     import { onMount } from "svelte"
 
+    let clazz = ""
+    export { clazz as class }
     let section: Section
     onMount(async () => (section = await loadSection({ id: "footer" })))
 </script>
 
 <footer
-    class="text-dark grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-10 divide-y divide-primary md:divide-y-0 py-10 px-5"
+    class="{clazz} text-dark grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-10 divide-y divide-primary md:divide-y-0"
 >
     {#each filterBlocks("link_group", section) as { __linklists, links, title }}
         <div class="space-y-1 flex items-center md:items-start flex-col py-10 md:py-0">

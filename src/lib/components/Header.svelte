@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { Collection } from "shopify-storefront-api-typings"
-    import { graphql, query } from "../../common/query"
-    import { preloadImage, delay } from "../../common/utility"
+    import { graphql, query } from "$lib/common/query"
+    import { preloadImage, delay } from "$lib/common/utility"
     import { fade, slide, fly } from "svelte/transition"
     import { quartInOut } from "svelte/easing"
     import { SearchMajor, CartMajor, CustomersMajor, CaretDownMinor } from "../polaris"
-    import type { Section } from "../../common/sections"
-    import { loadSection, filterBlocks } from "../../common/sections"
+    import type { Section } from "$lib/common/sections"
+    import { loadSection, filterBlocks } from "$lib/common/sections"
     import { Link, Carousel, SocialLink } from "$lib/components"
     import { onMount } from "svelte"
 

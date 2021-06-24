@@ -26,7 +26,6 @@
 			"$app/*": [".svelte/dev/runtime/app/*", ".svelte/build/runtime/app/*"],
             "$service-worker": [".svelte/build/runtime/service-worker"],
 			"$lib/*": ["src/lib/*"],
-            "$common/*": ["src/common/*"],
             "$types/*": ["src/types/*"] 
 		},
         "noImplicitAny": true

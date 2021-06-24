@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-    import type { LoadOptions, Loaded } from "../types/index.type"
-    export async function load(options: LoadOptions): Promise<Loaded> {
+    import type { Load } from "@sveltejs/kit"
+    export const load: Load = ({ page }) {
         return {
             props: {
-                path: options.page.path
+                path: page.path
             }
         }
     }

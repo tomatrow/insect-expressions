@@ -130,7 +130,7 @@ const collectionListQuery = graphql`
 
 const pageQuery = graphql`
     query ($handle: String!) {
-        pageByHandle(handle: $handle) {
+        page: pageByHandle(handle: $handle) {
             id
             title
             body
@@ -219,7 +219,7 @@ export async function product(handle: string) {
 
 export async function page(handle: string) {
     const { data } = await query(pageQuery, { handle })
-    return data.pageByHandle
+    return data
 }
 export async function article(blogHandle: string, articleHandle: string) {
     const { data } = await query(articleQuery, { blogHandle, articleHandle })

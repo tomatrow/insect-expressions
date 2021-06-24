@@ -14,8 +14,8 @@
 </script>
 
 <script lang="ts">
-    import type { UnderlineActionParameters } from "../../actions"
-    import { bridge, underline } from "../../actions"
+    import type { UnderlineActionParameters } from "$lib/actions"
+    import { bridge, underline } from "$lib/actions"
 
     export let type: "button" | "submit" | "reset" = "button"
 

@@ -1,9 +1,8 @@
 <script lang="ts">
     import "../app.postcss"
-    import checkout, { createCheckout } from "../common/checkout"
+    import checkout, { createCheckout } from "$lib/common/checkout"
     import { onMount } from "svelte"
-    import Header from "$lib/app/Header.svelte"
-    import Footer from "$lib/app/Footer.svelte"
+    import { Header, Footer } from "$lib/components"
 
     onMount(async () => {
         checkout.useLocalStorage()
@@ -20,4 +19,4 @@
 <main class="mx-auto w-11/12" style="margin-top: {height}; min-height: calc(100vh-{height})">
     <slot />
 </main>
-<Footer />
+<Footer class="py-10 px-5 w-full" />
