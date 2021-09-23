@@ -7,9 +7,8 @@
     import { SearchMajor, CartMajor, CustomersMajor, CaretDownMinor } from "../polaris"
     import type { Section } from "$lib/common/sections"
     import { loadSection, filterBlocks } from "$lib/common/sections"
-    import { Link, Carousel, SocialLink } from "$lib/components"
+    import { Link, Carousel, SocialIcon } from "$lib/components"
     import { onMount } from "svelte"
-
     export const height = "9.5rem"
 
     let global: Section

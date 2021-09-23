@@ -3,7 +3,7 @@
     import { graphql, query } from "$lib/common/query"
     import { page as loadPage } from "$lib/common/api"
 
-    export const load: Load = async function load({ page }) {
+    export const load: Load = async ({ page }) => {
         const { data } = await query(
             graphql`
                 query ($handle: String!) {

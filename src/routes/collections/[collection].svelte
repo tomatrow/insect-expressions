@@ -1,26 +1,24 @@
 <script lang="ts" context="module">
-    import { collection } from "../../common/api"
-    import type { LoadInput, LoadOutput } from "@sveltejs/kit/types.internal"
-    export async function load({ page }: LoadInput): Promise<LoadOutput> {
-        const { handle } = page.params as { handle: string }
+    import { collection } from "$lib/common/api"
+    import type { Load } from "@sveltejs/kit"
+    export const load: Load = async ({ page }) => {
         return {
-            props: await collection(handle)
+            props: await collection(page.params?.collection)
         }
     }
 </script>
 
 <script lang="ts">
-    import { formatMoney } from "../../common/utility"
+    import { formatMoney } from "$lib/common/utility"
     import type { Image, ProductConnection } from "shopify-storefront-api-typings"
-    export let id: string
-    id
 
+    export let id: string
     export let title: string
     export let image: Image
-    image
     export let descriptionHtml: string
-
     export let products: ProductConnection
+    id
+    image
 </script>
 
 <h1 class="text-dark pt-4 text-4xl">{title}</h1>

@@ -6,9 +6,59 @@
         {{content_for_header}}
     </head>
     <body>
-        {% section "global" %}
-        {% section "header" %}
-        {% section "footer" %}
-        {{ content_for_layout }}
+        {% liquid 
+            assign path = request.path
+            assign type = request.page_type
+        %}
+
+        <script>
+            console.log("layout/theme.liquid")
+            console.log({ request: {
+                path: {{ path | json }},
+                page_type: {{ type | json }}
+            }})
+        </script>
+        
+        {% if type != "policy" %}
+            {{ content_for_layout }}
+        {% endif %}
+        
+        {% liquid
+            case type 
+                when "404"
+                    render "__404"
+                when "article"
+                when "blog"
+                when "cart"
+                    render "cart"
+                when "collection"
+                    case path 
+                        when "/collections/a-hidden-world"
+                            render "__collections__a-hidden-world"
+                    endcase 
+                when "list-collections"
+                    render "__collections"
+                when "customers/account"
+                    render "__account"
+                when "customers/activate_account"
+                when "customers/addresses"
+                when "customers/login"
+                when "customers/order"
+                when "customers/register"
+                when "customers/reset_password"
+                when "gift_card"
+                when "index"
+                    render "__"
+                when "page"
+                when "password"
+                when "product"
+                when "search"
+                when "policy"
+                    case path 
+                        when "/policies/privacy-policy"
+                            render "__policies__privacy-policy"
+                    endcase 
+            endcase
+        %}
     </body>
 </html>

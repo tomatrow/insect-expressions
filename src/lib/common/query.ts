@@ -8,13 +8,15 @@ export function mutation(query: string, variables = {}) {
 
 export async function primitiveQuery(query: string, variables: Record<string, any>) {
     const headers: HeadersInit = {
-        "X-Shopify-Storefront-Access-Token": import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN
+        "X-Shopify-Storefront-Access-Token": import.meta.env
+            .VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string
     }
     let body: string
 
     if (variables === undefined) {
-        body = query
+        // @ts-ignore
         headers["Content-Type"] = "application/graphql"
+        body = query
     } else {
         Object.assign(headers, {
             "Content-Type": "application/json",
@@ -23,26 +25,26 @@ export async function primitiveQuery(query: string, variables: Record<string, an
         body = JSON.stringify({ query, variables })
     }
 
-    const fetch =
-        typeof window !== "undefined"
-            ? window.fetch
-            : ((await import("node-fetch").then(
-                  mod => mod.default
-              )) as WindowOrWorkerGlobalScope["fetch"])
+    // const fetch =
+    //     typeof window !== "undefined"
+    //         ? window.fetch
+    //         : ((await import("node-fetch").then(
+    //               mod => mod.default
+    //           )) as WindowOrWorkerGlobalScope["fetch"])
 
-    return await fetch(
-        `https://${import.meta.env.VITE_SHOPIFY_SHOP_URL}/api/2021-01/graphql.json`,
+    const response = await fetch(
+        `https://${import.meta.env.VITE_SHOPIFY_SHOP_URL}/api/${
+            import.meta.env.VITE_SHOPIFY_STOREFRONT_VERSION
+        }/graphql.json`,
         {
             method: "post",
             headers,
             body
         }
     )
-        .then(response => response.json())
-        .then(json => {
-            if (json.errors) throw new Error(json.errors[0]?.message)
-            return json
-        })
+    const json = await response.json()
+    if (json.errors) throw new Error(json.errors[0]?.message)
+    return json
 }
 
 // just to get prettier to autocorrect syntax

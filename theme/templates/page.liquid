@@ -1,1 +1,9 @@
-<script>console.log('page.liquid')</script>
+{% layout none %}
+<script>console.log('templates/page.liquid')</script>
+{% liquid 
+    assign path = request.path
+    case path 
+        when "/pages/custom-order"
+            render "__pages__custom-order"
+    endcase 
+%}

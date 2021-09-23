@@ -1,6 +1,8 @@
 <script>
     import { dev } from "$app/env"
     import Layout from "./__layout.svelte"
+    import { Section, Header } from "$lib/components"
+
     export let error, status
 </script>
 
@@ -9,15 +11,15 @@
 </svelte:head>
 
 <Layout>
-    <div class="col-md-9">
-        <h1>{status}</h1>
+    <Section class="col-md-9">
+        <Header>{status}</Header>
 
         <p>{error?.message}</p>
 
         {#if dev && error?.stack}
             <pre>{error.stack}</pre>
         {/if}
-    </div>
+    </Section>
 </Layout>
 
 <style>

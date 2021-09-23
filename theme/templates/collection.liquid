@@ -1,1 +1,9 @@
-<script>console.log('collection.liquid')</script>
+{% layout none %}
+<script>console.log('templates/collection.liquid')</script>
+{% liquid 
+    assign path = request.path
+    case path 
+        when "/collections/a-hidden-world"
+            render "__collections__a-hidden-world"
+    endcase 
+%}

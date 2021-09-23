@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { UnderlineActionParameters } from "$lib/actions"
     import { bridge, underline } from "$lib/actions"
-    import { makeClasses } from "./Button.svelte"
+    import { makeClasses } from "$lib/components/Button/index.svelte"
 
     export let primary = false
     export let secondary = false
@@ -11,6 +11,7 @@
     export { clazz as class, zunderline as underline }
 
     export let href: string
+    export let title: string = undefined
 
     $: classes = makeClasses({ primary, secondary, blob })
 </script>
@@ -20,5 +21,11 @@
     class="{classes} {clazz}"
     {href}
     on:click
-    {...$$restProps}><slot /></a
+    {...$$restProps}
 >
+    {#if $$slots.default}
+        <slot {title} />
+    {:else if title}
+        {title}
+    {/if}
+</a>

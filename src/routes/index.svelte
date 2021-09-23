@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit"
-    export const load: Load = ({ page }) {
+    import type { Session } from "$lib/types/kit.type"
+
+    export const load: Load<{ session: Session }> = ({ page, session }) => {
         return {
             props: {
                 path: page.path
@@ -27,8 +29,8 @@
     <a href="/pages/contact">Contact</a>
     <a href="/pages/submit-a-custom-order">Custom Order</a>
     <a href="/pages/subscription-sign-up">Subscription Sign Up</a>
-    <a href="/account/login">Login</a>
-    <a href="/account/register">Register</a>
+    <!-- <a href="/account/login">Login</a>
+    <a href="/account/register">Register</a> -->
     <a href="/cart">Cart</a>
     <a href="/products/insect-expressions-gift-card">Gift Card</a>
     <a target="_blank" href="https://www.instagram.com/insectexpressions/">Instagram</a>
