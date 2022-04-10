@@ -2,7 +2,9 @@
 node_modules
 /.svelte-kit
 /build
-/functions
 .env
-.env.fish
-log.md
+/package
+.env.*
+!.env.example
+*.gq.ts
+/static/images

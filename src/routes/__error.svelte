@@ -1,9 +1,23 @@
-<script>
+<script context="module" lang="ts">
+    import type { ErrorLoad } from "@sveltejs/kit"
+
+	export const load: ErrorLoad = ({ error, status }) => {
+		return {
+			props: {
+                error,
+                status
+			}
+		};
+	}
+</script>
+
+<script lang="ts">
     import { dev } from "$app/env"
     import Layout from "./__layout.svelte"
     import { Section, Header } from "$lib/components"
 
-    export let error, status
+    export let error: Error
+    export let status: number
 </script>
 
 <svelte:head>
@@ -22,8 +36,8 @@
     </Section>
 </Layout>
 
-<style>
-    h1,
+<style lang="postcss">
+/*     h1,
     p {
         margin: 0 auto;
     }
@@ -39,5 +53,5 @@
         h1 {
             font-size: 4em;
         }
-    }
+    } */
 </style>

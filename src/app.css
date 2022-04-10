@@ -1,0 +1,9 @@
+@tailwind base;
+
+body {
+    min-height: 100vh;
+    @apply bg-muted;
+}
+
+@tailwind components;
+@tailwind utilities;

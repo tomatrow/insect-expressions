@@ -1,17 +1,17 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit"
-    export const load: Load = ({ page }) => {
+    export const load: Load = ({ url }) => {
         return {
             props: {
-                path: page.path
+                url
             }
         }
     }
 </script>
 
 <script lang="ts">
-    export let path: string
-    console.log(path)
+    export let url: URL
+    console.log(url)
 </script>
 
-<div>Hello from {path}</div>
+<div>Hello from {url}</div>

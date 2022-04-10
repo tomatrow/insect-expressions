@@ -1,0 +1,78 @@
+{
+    "links": [
+        {
+            "title": "Shop",
+            "href": "/collections",
+            "children": [
+                {
+                    "title": "A Hidden World",
+                    "href": "/collections/a-hidden-world",
+                    "children": [
+                        {
+                            "title": "15x12",
+                            "href": "/collections/a-hidden-world/products/forest-floor-camouflage-insect-display-shadowbox"
+                        },
+                        {
+                            "title": "10x10",
+                            "href": "/collections/a-hidden-world/products/10x10-forest-floor-camouflage-insect-display-shadowbox"
+                        },
+                        {
+                            "title": "5x5",
+                            "href": "/collections/a-hidden-world/products/5x5-forest-floor-camouflage-insect-display-shadowbox"
+                        }
+                    ]
+                },
+                {
+                    "title": "Dazzling Deception",
+                    "href": "/collections/dazzling-deception",
+                    "children": [
+                        {
+                            "title": "Owl mimicking butterfly",
+                            "href": "/collections/dazzling-deception/products/owl-mimicking-butterfly-display-shadowbox"
+                        }
+                    ]
+                },
+                {
+                    "title": "Impressive Proportions",
+                    "href": "/collections/impressive-proportions",
+                    "children": [
+                        {
+                            "title": "Large branch beetle",
+                            "href": "/collections/impressive-proportions/products/l-axbxc-beetle-on-a-branch-acrylic-insect-display-case"
+                        },
+                        {
+                            "title": "Midsize beetle",
+                            "href": "/collections/impressive-proportions/products/axb-beetle-on-a-branch-insect-display-glass-dome"
+                        },
+                        {
+                            "title": "Small branch beetle",
+                            "href": "/collections/impressive-proportions/products/axbxc-beetle-on-a-branch-acrylic-insect-display-case"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "About",
+            "href": "/pages/about"
+        },
+        {
+            "title": "Contact",
+            "href": "/contact",
+            "children": [
+                {
+                    "title": "Submit A Custom Order",
+                    "href": "/pages/submit-a-custom-order"
+                },
+                {
+                    "title": "Request A Species",
+                    "href": "/pages/request-a-species"
+                }
+            ]
+        },
+        {
+            "title": "Care Guide",
+            "href": "/pages/care"
+        }
+    ]
+}

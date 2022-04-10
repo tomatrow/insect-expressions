@@ -1,29 +1,24 @@
-import { resolve } from "path"
-import format from "@tomatrow/zen-format"
-import sveltePreprocess from "svelte-preprocess"
-import adapter from "./scripts/adapter/index.js"
+import gQueryCodegen from '@leveluptuts/g-query/codegen'
+import Icons from 'unplugin-icons/vite'
+import preprocess from "svelte-preprocess"
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-    // Consult https://github.com/sveltejs/svelte-preprocess
-    // for more information about preprocessors
-    preprocess: [
-        sveltePreprocess({
-            postcss: true
-        })
-    ],
+    preprocess: preprocess({
+        postcss: true
+    }),
     kit: {
-        // By default, `npm run build` will create a standard Node app.
-        // You can create optimized builds for different platforms by
-        // specifying a different adapter
-        adapter: adapter(),
-
-        // hydrate the <div id="svelte"> element in src/app.html
         target: "#svelte",
         vite: {
             plugins: [
-                format({
-                    load: true // I think this fixes certain issues
+                Icons({
+                    compiler: 'svelte'
+                }),
+                gQueryCodegen({
+                    schema: 'src/lib/graphql/schema.graphql', // path to schema, schema is required
+                    out: 'src/lib/graphql', // Where you want the general schema types to output
+                    gPath: '$lib/common/g' // Path to g, created in step 1.
+                    // debug: false
                 })
             ]
         }

@@ -1,10 +1,10 @@
-<script lang="ts">
-    import type { Collection } from "shopify-storefront-api-typings"
+<!-- <script lang="ts">
+    import type { Collection } from "$lib/types/shopify-storefront.type"
     import { graphql, query } from "$lib/common/query"
     import { preloadImage, delay } from "$lib/common/utility"
     import { fade, slide, fly } from "svelte/transition"
     import { quartInOut } from "svelte/easing"
-    import { SearchMajor, CartMajor, CustomersMajor, CaretDownMinor } from "../polaris"
+    // import { SearchMajor, CartMajor, CustomersMajor, CaretDownMinor } from "../polaris"
     import type { Section } from "$lib/common/sections"
     import { loadSection, filterBlocks } from "$lib/common/sections"
     import { Link, Carousel, SocialIcon } from "$lib/components"
@@ -146,4 +146,4 @@
             </div>
         </div>
     </header>
-{/if}
+{/if} -->

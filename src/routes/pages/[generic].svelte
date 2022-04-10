@@ -3,7 +3,7 @@
     import { graphql, query } from "$lib/common/query"
     import { page as loadPage } from "$lib/common/api"
 
-    export const load: Load = async ({ page }) => {
+    export const load: Load = async ({ params }) => {
         const { data } = await query(
             graphql`
                 query ($handle: String!) {
@@ -14,7 +14,7 @@
                     }
                 }
             `,
-            { handle: page.params.handle }
+            { handle: params.handle }
         )
         return {
             props: data
@@ -23,7 +23,7 @@
 </script>
 
 <script lang="ts">
-    import type { Page } from "shopify-storefront-api-typings"
+    import type { Page } from "$lib/types/shopify-storefront.type"
     export let page: Page
 
     console.log({ props: $$props })

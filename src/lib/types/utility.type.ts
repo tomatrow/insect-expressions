@@ -8,7 +8,7 @@ export interface Link {
 
 export interface Image {
     src: string
-    alt: string
+    alt?: string
     srcset?: string
 }
 

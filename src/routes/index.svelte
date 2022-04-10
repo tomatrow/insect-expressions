@@ -1,22 +1,8 @@
-<script lang="ts" context="module">
-    import type { Load } from "@sveltejs/kit"
-    import type { Session } from "$lib/types/kit.type"
-
-    export const load: Load<{ session: Session }> = ({ page, session }) => {
-        return {
-            props: {
-                path: page.path
-            }
-        }
-    }
-</script>
-
 <script lang="ts">
-    export let path: string
-    console.log(path)
+    console.log("hello")
 </script>
 
-<div>Hello from {path}</div>
+<!-- <div>Hello from {path}</div>
 <div class="flex flex-col">
     <a href="/collections/impressive-proportions">Impressive Proportions</a>
     <a href="/collections/dazzling-deception">Dazzling Deception</a>
@@ -29,10 +15,10 @@
     <a href="/pages/contact">Contact</a>
     <a href="/pages/submit-a-custom-order">Custom Order</a>
     <a href="/pages/subscription-sign-up">Subscription Sign Up</a>
-    <!-- <a href="/account/login">Login</a>
-    <a href="/account/register">Register</a> -->
+     <a href="/account/login">Login</a>
+    <a href="/account/register">Register</a> 
     <a href="/cart">Cart</a>
     <a href="/products/insect-expressions-gift-card">Gift Card</a>
     <a target="_blank" href="https://www.instagram.com/insectexpressions/">Instagram</a>
     <a target="_blank" href="https://www.facebook.com/InsectExpressions">Facebook</a>
-</div>
+</div> -->

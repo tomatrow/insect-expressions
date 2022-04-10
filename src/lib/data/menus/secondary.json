@@ -1,0 +1,38 @@
+{
+    "linkSections": [
+        {
+            "title": "Policies",
+            "links": [
+                {
+                    "title": "Return Policy",
+                    "href": "/policies/return-policy"
+                },
+                {
+                    "title": "Privacy Policy",
+                    "href": "/policies/privacy-policy"
+                },
+                {
+                    "title": "Terms of Service",
+                    "href": "/policies/terms-of-service"
+                }
+            ]
+        },
+        {
+            "title": "Links",
+            "links": [
+                {
+                    "title": "Request A Species",
+                    "href": "/pages/request-a-species"
+                },
+                {
+                    "title": "Care Guide",
+                    "href": "/pages/care"
+                },
+                {
+                    "title": "Contact",
+                    "href": "/contact"
+                }
+            ]
+        }
+    ]
+}

@@ -1,9 +1,0 @@
-<script>
-    import { View } from "svench"
-    import Button from "./index.svelte"
-</script>
-
-<View name="buttons">
-    <Button primary blob>Primary</Button>
-    <Button secondary blob>Secondary</Button>
-</View>

@@ -1,16 +1,16 @@
 <script lang="ts" context="module">
     import { collection } from "$lib/common/api"
     import type { Load } from "@sveltejs/kit"
-    export const load: Load = async ({ page }) => {
+    export const load: Load = async ({ params }) => {
         return {
-            props: await collection(page.params?.collection)
+            props: await collection(params?.collection)
         }
     }
 </script>
 
 <script lang="ts">
     import { formatMoney } from "$lib/common/utility"
-    import type { Image, ProductConnection } from "shopify-storefront-api-typings"
+    import type { Image, ProductConnection } from "$lib/types/shopify-storefront.type"
 
     export let id: string
     export let title: string

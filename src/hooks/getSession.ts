@@ -7,22 +7,21 @@ import type { Locals } from "./index.type"
 import type { Session } from "$lib/types/kit.type"
 
 export const getSession: GetSession<Locals, Session> = ({ locals }) => {
-    const { primaryDomain, name } = locals.sessionResources.shop
-    const { header, footer, brand } = getKitFields(locals.sessionResources.shop)
-
-    const session: Session = {
-        header,
-        footer,
-        brand,
-        shop: {
-            primaryDomain,
-            name
-        }
-    }
-
-    console.log({ session })
-
-    return session
+    return {}
+//     const { primaryDomain, name } = locals.sessionResources.shop
+//     const { header, footer, brand } = getKitFields(locals.sessionResources.shop)
+// 
+//     const session: Session = {
+//         header,
+//         footer,
+//         brand,
+//         shop: {
+//             primaryDomain,
+//             name
+//         }
+//     }
+// 
+//     return session
 }
 
 export async function getSessionResources() {
