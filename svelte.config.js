@@ -1,6 +1,7 @@
 import gQueryCodegen from '@leveluptuts/g-query/codegen'
 import Icons from 'unplugin-icons/vite'
 import preprocess from "svelte-preprocess"
+import adapter from "@sveltejs/adapter-netlify"
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -8,6 +9,7 @@ const config = {
         postcss: true
     }),
     kit: {
+        adapter: adapter(),
         vite: {
             plugins: [
                 Icons({

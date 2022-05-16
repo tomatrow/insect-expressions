@@ -1,0 +1,10 @@
+[build]
+  command = "npx pnpm install --frozen-lockfile --store=node_modules/.pnpm-store && npx pnpm run build"
+  publish = "build"
+
+[build.environment]
+  NPM_FLAGS = "--version" # this prevents npm install from happening
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "functions"

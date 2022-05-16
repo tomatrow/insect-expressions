@@ -5,6 +5,7 @@ specifiers:
   '@leveluptuts/svelte-toy': ^0.0.18
   '@macfja/svelte-persistent-store': ^1.2.0
   '@splidejs/svelte-splide': ^0.1.18
+  '@sveltejs/adapter-netlify': ^1.0.0-next.57
   '@sveltejs/kit': ^1.0.0-next.320
   '@types/drift-zoom': ^1.5.0
   '@types/lodash': ^4.14.178
@@ -13,7 +14,7 @@ specifiers:
   cssnano: ^5.0.16
   drift-zoom: ^1.5.0
   env-cmd: ^10.1.0
-  graphql: ^16.3.0
+  graphql: ^15.0.0
   graphql-tag: ^2.12.6
   lodash: ^4.17.21
   node-fetch: ^3.2.0
@@ -39,12 +40,13 @@ specifiers:
 
 dependencies:
   '@leveluptuts/g-query': github.com/tomatrow/gQuery/e0a6a412394c0e6f043bd84fab2c2d5daf2c01f9_40146b36d18138e3202fbb722e5f65e4
-  graphql-tag: 2.12.6_graphql@16.3.0
+  graphql-tag: 2.12.6_graphql@15.8.0
 
 devDependencies:
   '@leveluptuts/svelte-toy': 0.0.18
   '@macfja/svelte-persistent-store': 1.2.0_svelte@3.46.3
   '@splidejs/svelte-splide': 0.1.18
+  '@sveltejs/adapter-netlify': 1.0.0-next.57
   '@sveltejs/kit': 1.0.0-next.320_svelte@3.46.3
   '@types/drift-zoom': 1.5.0
   '@types/lodash': 4.14.178
@@ -53,7 +55,7 @@ devDependencies:
   cssnano: 5.0.16_postcss@8.4.5
   drift-zoom: 1.5.0
   env-cmd: 10.1.0
-  graphql: 16.3.0
+  graphql: 15.8.0
   lodash: 4.17.21
   node-fetch: 3.2.0
   optional-default-floaty-sveltekit-theme: 0.0.10
@@ -1167,7 +1169,6 @@ packages:
 
   /@iarna/toml/2.2.5:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
-    dev: false
 
   /@iconify/types/1.0.12:
     resolution: {integrity: sha512-6er6wSGF3hgc1JEZqiGpg21CTCjHBYOUwqLmb2Idzkjiw6ogalGP0ZMLVutCzah+0WB4yP+Zd2oVPN8jvJ+Ftg==}
@@ -1265,6 +1266,14 @@ packages:
     resolution: {integrity: sha512-R/19qmvSSCwdcBv1pfRCWRwrXfDvMY5epB7LW1vkSo5kzNvv56fjPurmJjkzHDHdrvh9Kr83SAF33jj7BLZjbg==}
     dependencies:
       '@splidejs/splide': 3.6.12
+    dev: true
+
+  /@sveltejs/adapter-netlify/1.0.0-next.57:
+    resolution: {integrity: sha512-rqvOr488+7NGkEHw/D6v1Y8Fg0MbiUP/YI1uSYjKy+tA8/4FOdBgU8Nk8daPTxWEU+CpsgzvA4X8IVonuML9SA==}
+    dependencies:
+      '@iarna/toml': 2.2.5
+      esbuild: 0.14.34
+      tiny-glob: 0.2.9
     dev: true
 
   /@sveltejs/kit/1.0.0-next.320_svelte@3.46.3:
@@ -2774,6 +2783,10 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /globalyzer/0.1.0:
+    resolution: {integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==}
+    dev: true
+
   /globby/11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
     engines: {node: '>=10'}
@@ -2796,6 +2809,10 @@ packages:
       ignore: 5.2.0
       merge2: 1.4.1
       slash: 4.0.0
+    dev: true
+
+  /globrex/0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
   /got/9.6.0:
@@ -2867,6 +2884,16 @@ packages:
       graphql: 16.3.0
     dev: false
 
+  /graphql-tag/2.12.6_graphql@15.8.0:
+    resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 15.8.0
+      tslib: 2.3.1
+    dev: false
+
   /graphql-tag/2.12.6_graphql@16.3.0:
     resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
     engines: {node: '>=10'}
@@ -2886,9 +2913,15 @@ packages:
       graphql: 16.3.0
     dev: false
 
+  /graphql/15.8.0:
+    resolution: {integrity: sha512-5gghUc24tP9HRznNpV2+FIoq3xKkj5dTQqf4v0CpdPbFVwFkWoxOM+o+2OC9ZSvjEMTjfmG9QT+gcvggTwW1zw==}
+    engines: {node: '>= 10.x'}
+    dev: true
+
   /graphql/16.3.0:
     resolution: {integrity: sha512-xm+ANmA16BzCT5pLjuXySbQVFwH3oJctUVdy81w1sV0vBU0KgDdBGtxQOUd5zqOBk/JayAFeG8Dlmeq74rjm/A==}
     engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
+    dev: false
 
   /has-ansi/2.0.0:
     resolution: {integrity: sha1-NPUEnOHs3ysGSa8+8k5F7TVBbZE=}
@@ -5056,6 +5089,13 @@ packages:
 
   /timsort/0.3.0:
     resolution: {integrity: sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=}
+    dev: true
+
+  /tiny-glob/0.2.9:
+    resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
+    dependencies:
+      globalyzer: 0.1.0
+      globrex: 0.1.2
     dev: true
 
   /title-case/3.0.3:
