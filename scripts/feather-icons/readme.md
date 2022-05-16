@@ -1,1 +1,0 @@
-Pretty much copied directly from Antony: https://gist.github.com/antony/3c5129fae41e4d6aea1e269cda99aafd
