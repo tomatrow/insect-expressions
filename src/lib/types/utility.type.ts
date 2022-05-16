@@ -2,7 +2,7 @@ export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
 
 export interface Link {
     href: string 
-    title: string 
+    title?: string 
     target?: string
 }
 

@@ -1,10 +1,9 @@
 <script lang="ts">
     import Frame from "./Frame.svelte"
     import Link from "$lib/components/Link.svelte"
-    // import * as x from "../../"
 </script>
 
-<section class="flex flex-col sm:flex-row sm:gap-4 sm:px-4 items-center w-full" >
+<section class="container mx-auto flex flex-col sm:flex-row sm:gap-4 items-center w-full" >
     <Frame --image="url(/images/mantis.jpg)" --border="white"  class="w-full p-8 flex flex-col justify-end items-end text-right">
         <h3 class="font-bold text-2xl">Request a Species</h3>
         <p>Don't see the species <br /> you wanted? <br /> Let me know!</p>

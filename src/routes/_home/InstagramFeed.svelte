@@ -28,10 +28,6 @@
 </script>
 
 <section class="xl:container mx-auto space-y-8">
-    <h2 class="text-center text-4xl">
-        <a target="_blank" href="https://www.instagram.com/insectexpressions">@insectexpressions</a>
-    </h2>
-    
     {#if feed}
         <div transition:scale class="grid gap-1 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 py-2">
             {#each feed.data as { media_url, permalink, caption }}

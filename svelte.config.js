@@ -8,7 +8,6 @@ const config = {
         postcss: true
     }),
     kit: {
-        target: "#svelte",
         vite: {
             plugins: [
                 Icons({
