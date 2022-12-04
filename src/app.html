@@ -2,12 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" href="%svelte.assets%/favicon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!--         <script src="https://static.mailerlite.com/data/a/2442/2442695/universal_l6h4d0t6u5_load.js?shop=insect-expressions.myshopify.com" /> -->
-        %svelte.head%
+        <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+        <meta name="viewport" content="width=device-width" />
+		<!-- <script src="https://static.mailerlite.com/data/a/2442/2442695/universal_l6h4d0t6u5_load.js?shop=insect-expressions.myshopify.com" /> -->
+        %sveltekit.head%
     </head>
-    <body>
-        <div id="svelte">%svelte.body%</div>
+    <body data-sveltekit-preload-data="hover">
+        <div style="display: contents">%sveltekit.body%</div>
     </body>
 </html>

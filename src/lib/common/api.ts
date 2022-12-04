@@ -1,54 +1,5 @@
-/* queries used to load  */
-import type { Collection } from "shopify-storefront-api-typings"
+import type { Collection, Page, Product, CollectionConnection } from "$lib/types/shopify-storefront.type"
 import { graphql, query } from "./query"
-
-const blogQuery = graphql`
-    query ($handle: String!) {
-        blogByHandle(handle: $handle) {
-            title
-            handle
-            id
-            articles(first: 250) {
-                edges {
-                    node {
-                        id
-                        title
-                        handle
-                        image {
-                            altText
-                            originalSrc
-                        }
-                    }
-                }
-            }
-        }
-    }
-`
-
-const blogListQuery = graphql`
-    {
-        blogs(first: 250) {
-            edges {
-                node {
-                    id
-                    title
-                    handle
-                    articles(first: 1) {
-                        edges {
-                            node {
-                                id
-                                excerptHtml
-                                image {
-                                    originalSrc
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-`
 
 export const productFragment = graphql`
     fragment ProductFragment on Product {
@@ -99,6 +50,19 @@ export const productFragment = graphql`
     }
 `
 
+export const collectionFragment = graphql`
+	fragment CollectionFragment on Collection {
+		id
+		title
+		descriptionHtml
+		image {
+			id
+			originalSrc
+			altText
+		}
+	}
+`
+
 const productQuery = graphql`
     query ($handle: String!) {
         productByHandle(handle: $handle) {
@@ -108,29 +72,9 @@ const productQuery = graphql`
     ${productFragment}
 `
 
-const collectionListQuery = graphql`
-    {
-        collections(first: 250) {
-            edges {
-                node {
-                    id
-                    handle
-                    title
-                    descriptionHtml
-                    image {
-                        id
-                        altText
-                        originalSrc
-                    }
-                }
-            }
-        }
-    }
-`
-
 const pageQuery = graphql`
     query ($handle: String!) {
-        page: pageByHandle(handle: $handle) {
+        pageByHandle(handle: $handle) {
             id
             title
             body
@@ -138,41 +82,11 @@ const pageQuery = graphql`
     }
 `
 
-const articleQuery = graphql`
-    query ($blogHandle: String!, $articleHandle: String!) {
-        blogByHandle(handle: $blogHandle) {
-            id
-            articleByHandle(handle: $articleHandle) {
-                id
-                title
-                contentHtml
-                image {
-                    id
-                    altText
-                    originalSrc
-                }
-                blog {
-                    id
-                    title
-                    handle
-                }
-            }
-        }
-    }
-`
-
 const collectionQuery = graphql`
     query ($handle: String!, $size: Int!, $cursor: String) {
         collectionByHandle(handle: $handle) {
-            id
-            title
-            descriptionHtml
-            image {
-                id
-                originalSrc
-                altText
-            }
-            products(first: $size, after: $cursor) {
+			...CollectionFragment
+            products(first: $size, sortKey: TITLE, after: $cursor) {
                 pageInfo {
                     hasNextPage
                     hasPreviousPage
@@ -186,51 +100,39 @@ const collectionQuery = graphql`
             }
         }
     }
+	${collectionFragment}
     ${productFragment}
 `
 
-const recommendationsQuery = graphql`
-    query ($id: ID!) {
-        productRecommendations(productId: $id) {
-            ...ProductFragment
-        }
-    }
-    ${productFragment}
+const collectionListQuery = graphql`
+	{
+		collections(first: 250, sortKey: TITLE) {
+			edges {
+				node {
+					...CollectionFragment
+				}
+			}
+		}
+	}
+	${collectionFragment}
 `
 
-export async function blog(handle: string) {
-    const { data } = await query(blogQuery, { handle })
-    return data.blogByHandle
+export async function getProduct(handle: string) {
+    const { productByHandle } = await query(productQuery, { handle })
+    return productByHandle as Product
 }
 
-export async function blogList() {
-    const { data } = await query(blogListQuery)
-    return data.blogs
-}
-export async function collectionList() {
-    const { data } = await query(collectionListQuery)
-    return data.collections
+export async function getPage(handle: string) {
+    const { pageByHandle } = await query(pageQuery, { handle })
+    return pageByHandle as Page
 }
 
-export async function product(handle: string) {
-    const { data } = await query(productQuery, { handle })
-    return data.productByHandle
+export async function getCollection(handle: string, cursor?: string, size = 10) {
+    const { collectionByHandle } = await query(collectionQuery, { handle, cursor, size })
+    return collectionByHandle as Collection
 }
 
-export async function page(handle: string) {
-    const { data } = await query(pageQuery, { handle })
-    return data
-}
-export async function article(blogHandle: string, articleHandle: string) {
-    const { data } = await query(articleQuery, { blogHandle, articleHandle })
-    return data.blogByHandle?.articleByHandle
-}
-export async function collection(handle: string, cursor?: string, size = 10) {
-    const { data } = await query(collectionQuery, { handle, cursor, size })
-    return data.collectionByHandle as Collection
-}
-
-export async function recommendations(id: string) {
-    const { data } = await query(recommendationsQuery, { id })
-    return data.productRecommendations
+export async function getCollectionList() {
+	const { collections } = await query(collectionListQuery)
+	return collections as CollectionConnection
 }

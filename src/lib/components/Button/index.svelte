@@ -1,16 +1,16 @@
 <script context="module">
-    export function makeClasses(
+    import { build } from "optional-default-site-kit"
+	
+	export function makeClasses(
         { primary, secondary, blob } = { primary: false, secondary: false, blob: false }
     ) {
-        return [
+        return build(
             primary && ((blob && "bg-primary hover:bg-primary-600") || "hover:text-primary"),
             secondary &&
                 ((blob && "bg-secondary hover:bg-secondary-600") || "hover:text-secondary"),
             blob && (primary || secondary) && "rounded p-2 text-light font-semibold",
             (primary || secondary) && "transition duration-400 ease-out"
-        ]
-            .filter(Boolean)
-            .join(" ")
+		)
     }
 </script>
 

@@ -1,4 +1,4 @@
-#! /usr/local/bin/fish
+#! /opt/homebrew/bin/fish
 function send_npm_run -a cmd
     tmux send-keys "srcenv .env; npm run $cmd" C-m
 end

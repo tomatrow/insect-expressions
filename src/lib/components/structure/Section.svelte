@@ -3,8 +3,8 @@
 
     incrementHeadingLevel()
 
-    export let style = undefined
-    let clazz = undefined
+    export let style = ""
+    let clazz = ""
     export { clazz as class }
 </script>
 

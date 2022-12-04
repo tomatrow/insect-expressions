@@ -1,3 +1,9 @@
+import { request } from "optional-default-site-kit/functions"
+
+const VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string
+const VITE_SHOPIFY_SHOP_URL = import.meta.env.VITE_SHOPIFY_SHOP_URL as string
+const VITE_SHOPIFY_STOREFRONT_VERSION = import.meta.env.VITE_SHOPIFY_STOREFRONT_VERSION as string
+
 export function query(query: string, variables = {}) {
     return primitiveQuery(query, variables)
 }
@@ -6,45 +12,18 @@ export function mutation(query: string, variables = {}) {
     return primitiveQuery(query, variables)
 }
 
-export async function primitiveQuery(query: string, variables: Record<string, any>) {
-    const headers: HeadersInit = {
-        "X-Shopify-Storefront-Access-Token": import.meta.env
-            .VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN as string
-    }
-    let body: string
+export async function primitiveQuery(query: string, variables: Record<string, any> = {}) {
+    const { errors, data } = await request(`https://${VITE_SHOPIFY_SHOP_URL}/api/${VITE_SHOPIFY_STOREFRONT_VERSION}/graphql.json`, {
+		body: { query, variables },
+		headers: {
+			"X-Shopify-Storefront-Access-Token": VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+			Accept: "application/json"
+		}
+	})
 
-    if (variables === undefined) {
-        // @ts-ignore
-        headers["Content-Type"] = "application/graphql"
-        body = query
-    } else {
-        Object.assign(headers, {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        })
-        body = JSON.stringify({ query, variables })
-    }
+    if (errors) throw new Error(errors[0]?.message)
 
-    // const fetch =
-    //     typeof window !== "undefined"
-    //         ? window.fetch
-    //         : ((await import("node-fetch").then(
-    //               mod => mod.default
-    //           )) as WindowOrWorkerGlobalScope["fetch"])
-
-    const response = await fetch(
-        `https://${import.meta.env.VITE_SHOPIFY_SHOP_URL}/api/${
-            import.meta.env.VITE_SHOPIFY_STOREFRONT_VERSION
-        }/graphql.json`,
-        {
-            method: "post",
-            headers,
-            body
-        }
-    )
-    const json = await response.json()
-    if (json.errors) throw new Error(json.errors[0]?.message)
-    return json
+    return data
 }
 
 // just to get prettier to autocorrect syntax

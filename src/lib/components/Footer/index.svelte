@@ -4,12 +4,6 @@
     import Section from "$lib/components/structure/Section.svelte"
     import Heading from "$lib/components/structure/Heading.svelte"
     import SocialIcon from "$lib/components/SocialIcon.svelte"
-    import { session } from "$app/stores"
-    import type { Session } from "$lib/types/kit.type"
-
-    const typedSession: Session = $session
-    const { linkSections } = typedSession.footer
-    const { social } = typedSession.brand
 
     let clazz = ""
     export { clazz as class }
@@ -36,10 +30,10 @@
     >
         <Heading class="hidden md:block mb-4 font-bold">Social</Heading>
         <ul class="gap-x-2 flex justify-center">
-            {#each social as { platform, link }}
+            {#each [...Array(3).keys()] as i}
                 <li>
-                    <Link {...link}>
-                        <SocialIcon {platform} />
+                    <Link href="#">
+                        {i}
                     </Link>
                 </li>
             {/each}

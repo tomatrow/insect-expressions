@@ -1,6 +1,4 @@
 <script lang="ts">
-    import Section from "$lib/components/structure/Section.svelte"
-    import Heading from "$lib/components/structure/Heading.svelte"
     import Button from "$lib/components/Button/index.svelte"
 </script>
 
@@ -9,7 +7,7 @@
     action="/contact#contact_form"
     class="space-y-3 flex items-start items-center md:items-start flex-col"
 >
-    <Heading class="hidden sm:block mb-4 font-bold">Newsletter</Heading>
+    <h4 class="hidden sm:block mb-4 font-bold">Newsletter</h4>
     <span class="text-center md:text-left"
         >Receive offers new products, and interesting content.</span
     >
