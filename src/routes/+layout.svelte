@@ -1,13 +1,12 @@
 <script lang="ts">
     import "../app.css"
-	import { type SecondaryMenu, Main, Primary, PrimaryCompact, Secondary, Navbar } from "optional-default-floaty-sveltekit-theme"
+	import { Main, Primary, PrimaryCompact, Secondary, Navbar } from "optional-default-floaty-sveltekit-theme"
 	import { build } from "optional-default-site-kit"
 	import ContactForm from "$lib/components/Footer/ContactForm.svelte";
-	import menu from "./menu.json"
+
 	import { Link } from "$lib/components"
 	import { page } from "$app/stores"
-	
-	const secondaryMenu = menu as SecondaryMenu
+	import * as menus from "$lib/data/menus"
 
 	let open = false
 </script>
@@ -15,7 +14,7 @@
 <Navbar {page} class="bg-muted gap-4 p-4 z-40">
 	<a href="/" class="p-4">LOGO</a>
 
-	<Primary class="mx-auto gap-4" {menu} megaClass="bg-blue-500 gap-4 p-4">
+	<Primary class="mx-auto gap-4" menu={menus.primaryMenu} megaClass="bg-blue-500 gap-4 p-4">
 		<svelte:fragment slot="link" let:href let:label let:level let:compact>
 			<a
 				{href}
@@ -33,8 +32,7 @@
 	</Primary>
 
 	<button class="hide-if-desktop ml-auto" type="button" on:click={() => (open = !open)}>
-		<!-- <Menu class="w-8 h-8" /> -->
-			menu
+		menu
 	</button>
 </Navbar>
 
@@ -44,7 +42,7 @@
 		class="text-dark grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-10 divide-y divide-primary md:divide-y-0"
 	>
 		<a href="/" class="p-8">LOGO</a>
-		<Secondary menu={secondaryMenu} class="self-stretch sm:mx-auto sm:max-w-lg sm:w-full">
+		<Secondary menu={menus.secondaryMenu} class="self-stretch sm:mx-auto sm:max-w-lg sm:w-full">
 			<svelte:fragment slot="link" let:href let:label let:level>
 				{#if level === 0}
 					<h4 class="sm:hidden md:block mb-4 font-bold">{label}</h4>
@@ -78,7 +76,7 @@
 {#if open}
 	<PrimaryCompact
 		{page}
-		{menu}
+		menu={menus.primaryMenu}
 		bind:open
 		class="text-dark bg-muted p-4"
 		rootClass="bg-light bg-opacity-80 z-50"
