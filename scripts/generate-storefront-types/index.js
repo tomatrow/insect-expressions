@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request"
-import { generateTypeScriptTypes } from "graphql-schema-typescript"
+import { generateTypeScriptTypes } from "@jlowcs/graphql-schema-typescript"
 import { buildClientSchema } from "graphql/utilities/buildClientSchema.js"
 import { getIntrospectionQuery } from "graphql/utilities/getIntrospectionQuery.js"
 
