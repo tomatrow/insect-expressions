@@ -1,36 +1,24 @@
 <script lang="ts">
     import "../app.css"
-	import { Main, Primary, PrimaryCompact, Secondary, Navbar } from "optional-default-floaty-sveltekit-theme"
-	import { build } from "optional-default-site-kit"
+	import { Main, PrimaryCompact, Secondary, Navbar } from "optional-default-floaty-sveltekit-theme"
 	import ContactForm from "$lib/components/Footer/ContactForm.svelte";
-
 	import { Link } from "$lib/components"
 	import { page } from "$app/stores"
 	import * as menus from "$lib/data/menus"
+	import PrimaryNav from "./PrimaryNav.svelte"
 
 	let open = false
 </script>
 
-<Navbar {page} class="bg-muted gap-4 p-4 z-40">
-	<a href="/" class="p-4">LOGO</a>
+<Navbar {page} class="bg-muted gap-4 p-4 z-40 flex items-center justify-center">
+	<PrimaryNav menu={menus.primaryMenu.slice(0, 2)} />
 
-	<Primary class="mx-auto gap-4" menu={menus.primaryMenu} megaClass="bg-blue-500 gap-4 p-4">
-		<svelte:fragment slot="link" let:href let:label let:level let:compact>
-			<a
-				{href}
-				class={build(
-					"bg-green-500",
-					level === 0 && "p-4",
-					level === 1 &&
-						(compact
-							? "p-4 duration-200 hover:bg-gray-100 whitespace-nowrap"
-							: "font-black"),
-					level === 2 && compact && "hover:bg-gray-100 duration-200 p-4 whitespace-nowrap"
-				)}>{label}!</a
-			>
-		</svelte:fragment>
-	</Primary>
+	<a href="/" class="p-4">
+		<img class="max-w-[10rem] sm:max-w-[12rem]" src="/images/logos/insect-expressions-green-text-logo.png" alt="Insect Expressions" />
+	</a>
 
+	<PrimaryNav menu={menus.primaryMenu.slice(2)} />
+		
 	<button class="hide-if-desktop ml-auto" type="button" on:click={() => (open = !open)}>
 		menu
 	</button>
