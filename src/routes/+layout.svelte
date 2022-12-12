@@ -6,6 +6,8 @@
 	import { page } from "$app/stores"
 	import * as menus from "$lib/data/menus"
 	import PrimaryNav from "./PrimaryNav.svelte"
+	// @ts-expect-error
+	import IconMenu from '~icons/carbon/menu'
 
 	let open = false
 </script>
@@ -20,7 +22,7 @@
 	<PrimaryNav menu={menus.primaryMenu.slice(2)} />
 		
 	<button class="hide-if-desktop ml-auto" type="button" on:click={() => (open = !open)}>
-		menu
+		<IconMenu />
 	</button>
 </Navbar>
 
@@ -69,9 +71,7 @@
 		class="text-dark bg-muted p-4"
 		rootClass="bg-light bg-opacity-80 z-50"
 	>
-		<svelte:fragment slot="link" let:level let:label let:href>
-			<a {href} class="hover:underline">{level}-{label}!</a>
-		</svelte:fragment>
+		<a slot="link" let:label let:href {href} class="hover:underline">{label}</a>
 	</PrimaryCompact>
 {/if}
 
