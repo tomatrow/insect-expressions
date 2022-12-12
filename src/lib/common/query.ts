@@ -13,7 +13,7 @@ export function mutation(query: string, variables = {}) {
 }
 
 export async function primitiveQuery(query: string, variables: Record<string, any> = {}) {
-    const { errors, data } = await request(`https://${VITE_SHOPIFY_SHOP_URL}/api/${VITE_SHOPIFY_STOREFRONT_VERSION}/graphql.json`, {
+    const { errors, data } = await request<any>(`https://${VITE_SHOPIFY_SHOP_URL}/api/${VITE_SHOPIFY_STOREFRONT_VERSION}/graphql.json`, {
 		body: { query, variables },
 		headers: {
 			"X-Shopify-Storefront-Access-Token": VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
