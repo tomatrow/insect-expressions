@@ -1,13 +1,15 @@
 <script lang="ts">
-    import "../app.css"
+	import "../app.css"
 	import { Main, PrimaryCompact, Secondary, Navbar } from "optional-default-floaty-sveltekit-theme"
-	import ContactForm from "$lib/components/Footer/ContactForm.svelte";
+	import ContactForm from "$lib/components/Footer/ContactForm.svelte"
 	import { Link } from "$lib/components"
 	import { page } from "$app/stores"
 	import * as menus from "$lib/data/menus"
 	import PrimaryNav from "./PrimaryNav.svelte"
 	// @ts-expect-error
-	import IconMenu from '~icons/carbon/menu'
+	import IconMenu from "~icons/carbon/menu"
+	// @ts-expect-error
+	import IconShoppingCart from "~icons/carbon/shopping-cart"
 
 	let open = false
 </script>
@@ -16,12 +18,18 @@
 	<PrimaryNav menu={menus.primaryMenu.slice(0, 2)} />
 
 	<a href="/" class="p-4">
-		<img class="max-w-[10rem] sm:max-w-[12rem]" src="/images/logos/insect-expressions-green-text-logo.png" alt="Insect Expressions" />
+		<img
+			class="max-w-[10rem] sm:max-w-[12rem]"
+			src="/images/logos/insect-expressions-green-text-logo.png"
+			alt="Insect Expressions"
+		/>
 	</a>
 
 	<PrimaryNav menu={menus.primaryMenu.slice(2)} />
-		
-	<button class="hide-if-desktop ml-auto" type="button" on:click={() => (open = !open)}>
+
+	<a class="ml-auto" href="/cart"><IconShoppingCart /></a>
+
+	<button class="hide-if-desktop" type="button" on:click={() => (open = !open)}>
 		<IconMenu />
 	</button>
 </Navbar>
@@ -43,9 +51,7 @@
 				{/if}
 			</svelte:fragment>
 		</Secondary>
-		<section
-			class="gap-y-1 flex items-center md:items-start flex-col justify-center md:justify-start py-8 md:py-0"
-		>
+		<section class="gap-y-1 flex items-center md:items-start flex-col justify-center md:justify-start py-8 md:py-0">
 			<h4 class="hidden md:block mb-4 font-bold">Social</h4>
 			<ul class="gap-x-2 flex justify-center">
 				{#each [...Array(3).keys()] as i}

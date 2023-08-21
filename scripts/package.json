@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@jlowcs/graphql-schema-typescript": "^2.0.0",
-    "graphql-request": "^5.0.0"
+    "graphql-request": "^5.0.0",
+    "typescript-json-schema": "^0.55.0"
   }
 }
