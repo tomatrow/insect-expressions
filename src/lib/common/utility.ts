@@ -1,3 +1,4 @@
+import { set } from "lodash"
 import type { Nullable } from "$lib/types/utility.type"
 
 export function formatMoney(amount: number) {
@@ -21,4 +22,10 @@ export function delay(ms: number): Promise<void> {
 
 export function isNotNil<T>(value: Nullable<T>): value is NonNullable<T> {
 	return value !== null && value !== undefined
+}
+
+export function parseFormData(formData: FormData) {
+	const data: Record<string, any> = {}
+	for (const [path, value] of formData) set(data, path, value)
+	return data
 }
