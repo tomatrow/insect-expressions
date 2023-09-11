@@ -1,9 +1,6 @@
-import { isNotNil } from "./utility"
 import type { HydratedProduct } from "./api"
 import type { Nullable, PickEnsure } from "$lib/types/utility.type"
 import { z } from "zod"
-
-// const customizerStepType = z.enum(["OPTION", "ACCESSORY"])
 
 export enum CustomizerStepType {
 	OPTION = "OPTION",
@@ -16,19 +13,30 @@ const productOptionConstraints = z.object({
 	exclude: z.array(z.string()).optional()
 })
 
-export interface ProductOptionConstraints {
-	// name of the option attached to the product
-	name: string
+export interface Constraints {
 	// include option values
 	include?: string[]
 	// excluded option values
 	exclude?: string[]
 }
 
+export function valueMatchesConstraints(value: string, { exclude = [], include }: Constraints) {
+	if (include && !include.includes(value)) return false
+
+	if (exclude.includes(value)) return false
+
+	return true
+}
+
+export interface ProductOptionConstraints extends Constraints {
+	// name of the option attached to the product
+	name: string
+}
+
 const customizerOptionStepData = z.object({
 	type: z.literal(CustomizerStepType.OPTION),
 	name: z.string(),
-	optionConstraint: productOptionConstraints.optional()
+	optionConstraint: productOptionConstraints
 })
 
 export interface CustomizerOptionStepData {
@@ -36,7 +44,7 @@ export interface CustomizerOptionStepData {
 	// name of the step
 	name: string
 	// name of option with possible constraints
-	optionConstraint?: ProductOptionConstraints
+	optionConstraint: ProductOptionConstraints
 }
 
 export interface CustomizerOptionStep extends CustomizerOptionStepData {
@@ -105,10 +113,23 @@ export interface CustomizerOptionSelectionData {
 	value: string
 }
 
+export const customizerOptionSelectionData = z.object({
+	value: z.string()
+})
+
+export function isCustomizerOptionSelectionData<T>(data: T): data is T & CustomizerOptionSelectionData {
+	return (data as Nullable<Partial<CustomizerOptionSelectionData>>)?.value !== undefined
+}
+
 export interface ProductSelectionData {
 	handle: string
 	options: Record<string, string>
 }
+
+export const productSelectionData = z.object({
+	handle: z.string(),
+	options: z.record(z.string())
+})
 
 export function isProductSelectionData<T>(value: T): value is T & ProductSelectionData {
 	return (
@@ -121,13 +142,19 @@ export interface CustomizerAccessorySelectionData {
 	selections: ProductSelectionData[]
 }
 
-export function isCustomizerAccessorySelectionData<T>(value: T): value is T & CustomizerAccessorySelectionData {
-	return Array.isArray((value as Nullable<CustomizerAccessorySelectionData>)?.selections)
+export const customizerAccessorySelectionData = z.object({
+	selections: z.array(productSelectionData)
+})
+
+export function isCustomizerAccessorySelectionData<T>(data: T): data is T & CustomizerAccessorySelectionData {
+	return Array.isArray((data as Nullable<CustomizerAccessorySelectionData>)?.selections)
 }
+
+export const customizerSelectionData = z.union([customizerOptionSelectionData, customizerAccessorySelectionData])
 
 export type CustomizerSelectionData = CustomizerOptionSelectionData | CustomizerAccessorySelectionData
 
-type CustomizerSelections = Record<string, CustomizerSelectionData>
+export type CustomizerSelections = Record<string, CustomizerSelectionData>
 
 export interface CustomizerState {
 	config: CustomizerConfig
@@ -136,20 +163,18 @@ export interface CustomizerState {
 
 const cleanSelections = (config: CustomizerConfig, selections: CustomizerSelections): CustomizerSelections =>
 	Object.fromEntries(
-		Object.entries(selections)
-			.filter(([handle, selection]) => {
-				const step = config.steps[handle]
+		Object.entries(selections).filter(([handle, selection]) => {
+			const step = config.steps[handle]
 
-				if (!step) return false
+			if (!step) return
 
-				switch (step.type) {
-					case "ACCESSORY":
-						return "selections" in (selection as CustomizerAccessorySelectionData)
-					case "OPTION":
-						return "options" in (selection as CustomizerOptionSelectionData)
-				}
-			})
-			.filter(isNotNil)
+			switch (step.type) {
+				case "ACCESSORY":
+					return isCustomizerAccessorySelectionData(selection)
+				case "OPTION":
+					return isCustomizerOptionSelectionData(selection)
+			}
+		})
 	)
 
 export class Customizer {
@@ -197,9 +222,7 @@ export class Customizer {
 
 		if (step.type !== CustomizerStepType.OPTION) throw new Error("Option step type is required")
 
-		const { exclude = [], include } = step.optionConstraint ?? {}
-
-		if ((include && !include.includes(value)) || exclude.includes(value)) return
+		if (!valueMatchesConstraints(value, step.optionConstraint ?? {})) return
 
 		this.selections = {
 			...this.selections,
@@ -214,7 +237,7 @@ export class Customizer {
 
 		if (step.type !== CustomizerStepType.ACCESSORY) throw new Error("Accessory step type is required")
 
-		if (!selections.length) throw new Error("At leasrt one accessory selction is required")
+		if (!selections.length) throw new Error("At least one accessory selction is required")
 
 		let currentSelection = this.selections[handle]
 		if (!isCustomizerAccessorySelectionData(currentSelection))
