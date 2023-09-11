@@ -363,6 +363,10 @@ export async function getCollection(handle: string, cursor?: string, size = 10) 
 }
 
 export async function getCollectionList() {
-	const { collections } = await query(collectionListQuery)
-	return collections as CollectionConnection
+	const response = await query(collectionListQuery)
+	const collections = response.collections as CollectionConnection | null
+
+	if (!collections) throw new Error(`not found - /collections`)
+
+	return collections.edges.map(edge => edge.node) ?? []
 }
