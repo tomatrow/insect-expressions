@@ -11,14 +11,8 @@
 	// $: values = option?.values.filter(value => valueMatchesConstraints(value, step.optionConstraint)) ?? []
 </script>
 
-<form use:enhance method="post" action="?/selectOption">
-	<input type="hidden" value={step.type} />
-
-	<!-- <select name="value">
+<!-- <select name="value">
 		{#each values as value}
 			<option {value}>{value}</option>
 		{/each}
 	</select> -->
-
-	<button>Select</button>
-</form>
