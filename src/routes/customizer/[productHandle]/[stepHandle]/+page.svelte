@@ -8,7 +8,8 @@
 	export let data: PageData
 	export let form: ActionData
 
-	$: ({ product, stepHandle, selections } = data)
+	$: ({ product, customizer } = data)
+	$: ({ stepHandle, selections } = customizer)
 	$: ({ options } = product)
 
 	$: ({ steps, order } = product.customizerConfig)

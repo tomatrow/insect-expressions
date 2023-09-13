@@ -6,9 +6,6 @@
 		isCustomizerOptionSelectionData
 	} from "$lib/common/customizer"
 	import type { ProductOption } from "$lib/types/shopify-storefront.type"
-	import { page } from "$app/stores"
-
-	$: console.log({ pageData: $page.data })
 
 	export let step: CustomizerOptionStep
 	export let options: ProductOption[]
