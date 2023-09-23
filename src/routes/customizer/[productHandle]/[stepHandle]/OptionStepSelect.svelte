@@ -31,8 +31,8 @@
 <label class="block">
 	<b>Value:</b>
 	<select name="value" required>
-		{#each values as value}
-			<option {value} selected={selectedValue === value}>{value}</option>
+		{#each [...values, undefined] as value}
+			<option {value} selected={selectedValue === value}>{value ?? ""}</option>
 		{/each}
 	</select>
 </label>

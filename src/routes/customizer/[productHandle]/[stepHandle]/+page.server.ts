@@ -7,12 +7,21 @@ import {
 	Customizer,
 	CustomizerStepType,
 	customizerOptionSelectionData,
-	customizerAccessorySelectionData
+	productSelectionData,
+	type CustomizerOptionSelectionData,
+	type CustomizerAccessorySelectionData
 } from "$lib/common/customizer"
 
 const schema = z.discriminatedUnion("type", [
 	z.object({ type: z.literal(CustomizerStepType.OPTION) }).merge(customizerOptionSelectionData),
-	z.object({ type: z.literal(CustomizerStepType.ACCESSORY) }).merge(customizerAccessorySelectionData)
+	z.object({
+		type: z.literal(CustomizerStepType.ACCESSORY),
+		selections: z.array(
+			productSelectionData.extend({
+				count: z.string()
+			})
+		)
+	})
 ])
 
 async function getProductsByHandle() {
@@ -40,8 +49,8 @@ export const load = (async ({ params, cookies }) => {
 				config: product.customizerConfig
 			}
 		}
-	} catch (err: any) {
-		throw error(400, err?.message)
+	} catch (loadError: any) {
+		throw error(400, loadError?.message)
 	}
 }) satisfies PageServerLoad
 
@@ -84,14 +93,37 @@ export const actions = {
 			})
 		}
 
+		let customizerSelectionData:
+			| ({
+					type: CustomizerStepType.OPTION
+			  } & CustomizerOptionSelectionData)
+			| ({
+					type: CustomizerStepType.ACCESSORY
+			  } & CustomizerAccessorySelectionData)
+		switch (actionData.type) {
+			case "OPTION":
+				customizerSelectionData = actionData
+				break
+			case "ACCESSORY":
+				customizerSelectionData = {
+					...actionData,
+					selections: actionData.selections.map(({ count, ...rest }) => ({ count: +count, ...rest }))
+				}
+				break
+			default:
+				return fail(400, {
+					formDataHydrationFailure: true
+				})
+		}
+
 		try {
-			switch (actionData.type) {
+			switch (customizerSelectionData.type) {
 				case CustomizerStepType.OPTION:
-					const { value } = actionData
+					const { value } = customizerSelectionData
 					customizer.selectOption(stepHandle, { value })
 					break
 				case CustomizerStepType.ACCESSORY:
-					const { selections } = actionData
+					const { selections } = customizerSelectionData
 					customizer.selectAccessories(stepHandle, selections)
 					break
 			}
@@ -103,7 +135,8 @@ export const actions = {
 
 		cookies.set("customizer", customizer.toString())
 	},
-	async restart({ cookies }) {
+	async reset({ cookies }) {
+		console.log("reset")
 		cookies.delete("customizer")
 	}
 } satisfies Actions

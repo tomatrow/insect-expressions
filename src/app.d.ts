@@ -5,7 +5,7 @@ import type { CustomizerConfig, CustomizerSelections } from "$lib/common/customi
 declare global {
 	namespace App {
 		interface PageData {
-			collections: Collection[]
+			collections?: Collection[]
 			products?: Partial<Record<string, HydratedProduct>>
 			customizer?: {
 				stepHandle: string

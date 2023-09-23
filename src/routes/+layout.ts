@@ -4,7 +4,8 @@ import type { LayoutLoad } from "./$types"
 
 export const load: LayoutLoad = async ({ fetch }) => {
 	installFetch(fetch)
+
 	return {
-		collections: getCollectionList()
+		collections: await getCollectionList()
 	}
 }

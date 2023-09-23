@@ -42,6 +42,17 @@
 
 	<form
 		method="post"
+		action="?/reset"
+		use:enhance={() => {
+			// prevent default callback from resetting the form
+			return ({ update }) => update({ reset: false })
+		}}
+	>
+		<button>Reset</button>
+	</form>
+
+	<form
+		method="post"
 		action="?/selectOption"
 		use:enhance={() => {
 			// prevent default callback from resetting the form
@@ -58,11 +69,4 @@
 
 		<button>Select</button>
 	</form>
-
-	<p>
-		<b>Config:</b>
-		<span class="whitespace-pre">
-			{@html JSON.stringify(data.product.customizerConfig, null, 4)}
-		</span>
-	</p>
 </div>
