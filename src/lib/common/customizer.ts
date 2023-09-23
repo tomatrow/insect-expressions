@@ -123,12 +123,14 @@ export function isCustomizerOptionSelectionData<T>(data: T): data is T & Customi
 
 export interface ProductSelectionData {
 	handle: string
-	options: Record<string, string>
+	count: number
+	options?: Record<string, string>
 }
 
 export const productSelectionData = z.object({
 	handle: z.string(),
-	options: z.record(z.string())
+	count: z.number(),
+	options: z.record(z.string()).optional()
 })
 
 export function isProductSelectionData<T>(value: T): value is T & ProductSelectionData {
@@ -221,6 +223,12 @@ export class Customizer {
 		if (!step) throw new Error("Unknown step")
 
 		if (step.type !== CustomizerStepType.OPTION) throw new Error("Option step type is required")
+
+		const option = this.product.options.find(option => option.name === step.optionConstraint.name)
+
+		if (!option) throw new Error("Option not found on product")
+
+		if (!option.values.includes(value)) throw new Error("Tried to select a value not in the option's values")
 
 		if (!valueMatchesConstraints(value, step.optionConstraint ?? {})) return
 
