@@ -81,6 +81,13 @@ export const collectionFragment = graphql`
 			originalSrc
 			altText
 		}
+		products(first: 250) {
+			edges {
+				node {
+					handle
+				}
+			}
+		}
 	}
 `
 
@@ -368,5 +375,5 @@ export async function getCollectionList() {
 
 	if (!collections) throw new Error(`not found - /collections`)
 
-	return collections.edges.map(edge => edge.node) ?? []
+	return collections.edges.map(edge => edge.node)
 }
